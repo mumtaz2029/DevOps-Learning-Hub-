@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Project 4 - Tomcat Deployment Demo</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<main class="page-shell">
+    <section class="hero-card">
+        <p class="eyebrow">DevOps-ready WAR application</p>
+        <h1 th:text="${title}">Project 4 - Tomcat Deployment Demo</h1>
+        <p class="lead" th:text="${subtitle}">
+            WAR-based Spring Boot application prepared for Apache Tomcat on Amazon Linux EC2.
+        </p>
+
+        <div class="meta-grid">
+            <article>
+                <span>Build Tool</span>
+                <strong th:text="${buildTool}">Maven</strong>
+            </article>
+            <article>
+                <span>Deployment Target</span>
+                <strong th:text="${deployTarget}">Apache Tomcat 10</strong>
+            </article>
+            <article>
+                <span>Runtime</span>
+                <strong th:text="${runtime}">Java 17</strong>
+            </article>
+        </div>
+
+        <div class="steps-card">
+            <h2>Deployment flow</h2>
+            <ol>
+                <li>Build the WAR with Maven.</li>
+                <li>Copy `project4-devops-app.war` to Tomcat `webapps/`.</li>
+                <li>Start or restart Tomcat on the EC2 instance.</li>
+                <li>Access the app on port `8080`.</li>
+            </ol>
+        </div>
+
+        <p class="timestamp">
+            View rendered at
+            <span th:text="${#temporals.format(lastUpdated, 'dd MMM yyyy HH:mm')}">10 Apr 2026 10:30</span>
+        </p>
+    </section>
+</main>
+</body>
+</html>
