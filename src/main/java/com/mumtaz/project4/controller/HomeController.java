@@ -14,9 +14,9 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("title", "Project 4 - Tomcat Deployment Demo");
-        model.addAttribute("subtitle", "WAR-based Spring Boot application prepared for Apache Tomcat on Amazon Linux EC2.");
+        model.addAttribute("subtitle", "WAR-based Spring Boot application prepared for Apache Tomcat 9 on Amazon Linux EC2.");
         model.addAttribute("buildTool", "Maven");
-        model.addAttribute("deployTarget", "Apache Tomcat 10");
+        model.addAttribute("deployTarget", "Apache Tomcat 9");
         model.addAttribute("runtime", "Java 17");
         model.addAttribute("lastUpdated", LocalDateTime.now());
         return "index";

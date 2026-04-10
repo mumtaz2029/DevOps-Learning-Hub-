@@ -8,8 +8,8 @@ It is designed for a DevOps-style deployment flow on an Amazon Linux EC2 instanc
 
 - Java 17
 - Maven
-- Spring Boot 3
-- Apache Tomcat 10
+- Spring Boot 2.7
+- Apache Tomcat 9
 - Thymeleaf
 - Amazon Linux EC2
 
@@ -50,7 +50,7 @@ These steps assume:
 - You created an EC2 instance
 - You installed Java 17
 - You installed Maven
-- You installed Apache Tomcat 10
+- You installed Apache Tomcat 9
 - Port `8080` is allowed in the EC2 security group
 
 ### 1. Install dependencies
@@ -62,13 +62,13 @@ sudo dnf update -y
 sudo dnf install -y java-17-amazon-corretto-devel git maven tar
 ```
 
-### 2. Install Tomcat 10
+### 2. Install Tomcat 9
 
 ```bash
 cd /opt
-sudo curl -O https://downloads.apache.org/tomcat/tomcat-10/v10.1.39/bin/apache-tomcat-10.1.39.tar.gz
-sudo tar -xzf apache-tomcat-10.1.39.tar.gz
-sudo mv apache-tomcat-10.1.39 tomcat
+sudo curl -O https://downloads.apache.org/tomcat/tomcat-9/v9.0.117/bin/apache-tomcat-9.0.117.tar.gz
+sudo tar -xzf apache-tomcat-9.0.117.tar.gz
+sudo mv apache-tomcat-9.0.117 tomcat
 sudo chmod +x /opt/tomcat/bin/*.sh
 ```
 
@@ -116,11 +116,11 @@ http://<your-ec2-public-ip>:8080/project4-devops-app/
 
 ## Important Compatibility Note
 
-This project uses Spring Boot 3, so it should be deployed to:
+This project now uses Spring Boot 2.7 so it is compatible with:
 
-- Apache Tomcat 10.1 or newer
+- Apache Tomcat 9
 
-Do not use Tomcat 9 for this project because Spring Boot 3 is based on `jakarta.*` packages.
+This is a better fit for environments where Tomcat 9 is already installed and you want a straightforward WAR deployment flow.
 
 ## Optional Restart Command
 
