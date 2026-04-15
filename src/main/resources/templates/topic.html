@@ -8,6 +8,12 @@
 </head>
 <body>
 <div class="page-shell topic-page-shell">
+    <div class="ambient-scene" aria-hidden="true">
+        <span class="orb orb-one"></span>
+        <span class="orb orb-two"></span>
+        <span class="orb orb-three"></span>
+        <span class="grid-glow"></span>
+    </div>
     <header class="topbar">
         <div class="brand">
             <span class="brand-mark">D</span>
@@ -25,7 +31,7 @@
     </header>
 
     <main class="content">
-        <section class="topic-hero-card">
+        <section class="topic-hero-card tilt-card">
             <div class="topic-hero-copy">
                 <p class="eyebrow" th:text="${topic.tag}">Beginner</p>
                 <h1 th:text="${topic.title}">Linux Essentials</h1>
@@ -38,7 +44,7 @@
         </section>
 
         <section class="topic-detail-grid">
-            <article class="section-shell topic-overview-card">
+            <article class="section-shell topic-overview-card tilt-card">
                 <div class="section-head compact">
                     <div>
                         <p class="section-tag">Overview</p>
@@ -48,7 +54,7 @@
                 <p class="topic-overview" th:text="${topic.overview}">Overview text</p>
             </article>
 
-            <article class="section-shell">
+            <article class="section-shell tilt-card">
                 <div class="section-head compact">
                     <div>
                         <p class="section-tag">Key Concepts</p>
@@ -62,7 +68,7 @@
         </section>
 
         <section class="topic-detail-grid second">
-            <article class="section-shell dark-panel">
+            <article class="section-shell dark-panel tilt-card">
                 <div class="section-head compact">
                     <div>
                         <p class="section-tag">Interview Prep</p>
@@ -74,7 +80,7 @@
                 </ul>
             </article>
 
-            <article class="section-shell takeaway-panel">
+            <article class="section-shell takeaway-panel tilt-card">
                 <div class="section-head compact">
                     <div>
                         <p class="section-tag">Takeaways</p>
@@ -95,7 +101,7 @@
                 </div>
             </div>
             <div class="topic-grid related-grid">
-                <a class="topic-card" th:each="related : ${relatedTopics}" th:href="@{/topics/{slug}(slug=${related.slug})}">
+                <a class="topic-card tilt-card" th:each="related : ${relatedTopics}" th:href="@{/topics/{slug}(slug=${related.slug})}">
                     <span class="topic-tag" th:text="${related.tag}">Core</span>
                     <h3 th:text="${related.title}">Git and GitHub</h3>
                     <p th:text="${related.description}">Related topic description.</p>
@@ -109,5 +115,6 @@
         </section>
     </main>
 </div>
+<script th:src="@{/js/app.js}"></script>
 </body>
 </html>
