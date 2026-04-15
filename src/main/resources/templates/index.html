@@ -21,7 +21,6 @@
             <a href="#interview">Interview Prep</a>
             <a href="#labs">Labs</a>
             <a href="#projects">Projects</a>
-            <a href="/api/health">Health API</a>
         </nav>
     </header>
 
@@ -64,11 +63,12 @@
                 <p>Build strong fundamentals before moving into automation, deployment, and cloud operations.</p>
             </div>
             <div class="topic-grid">
-                <article class="topic-card" th:each="topic : ${topics}">
+                <a class="topic-card" th:each="topic : ${topics}" th:href="@{/topics/{slug}(slug=${topic.slug})}">
                     <span class="topic-tag" th:text="${topic.tag}">Beginner</span>
                     <h3 th:text="${topic.title}">Linux Essentials</h3>
                     <p th:text="${topic.description}">Master commands and permissions.</p>
-                </article>
+                    <span class="topic-link">Open topic</span>
+                </a>
             </div>
         </section>
 

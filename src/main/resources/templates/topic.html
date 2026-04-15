@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${topic.title} + ' | ' + ${siteTitle}">Linux Essentials | DevOps Learning Portal</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="page-shell topic-page-shell">
+    <header class="topbar">
+        <div class="brand">
+            <span class="brand-mark">D</span>
+            <div>
+                <strong th:text="${siteTitle}">DevOps Learning Portal</strong>
+                <p>Topic detail page</p>
+            </div>
+        </div>
+        <nav class="topnav">
+            <a href="/">Home</a>
+            <a href="/#topics">Topics</a>
+            <a href="/#interview">Interview Prep</a>
+            <a href="/#projects">Projects</a>
+        </nav>
+    </header>
+
+    <main class="content">
+        <section class="topic-hero-card">
+            <div class="topic-hero-copy">
+                <p class="eyebrow" th:text="${topic.tag}">Beginner</p>
+                <h1 th:text="${topic.title}">Linux Essentials</h1>
+                <p class="lead" th:text="${topic.description}">Topic description</p>
+            </div>
+            <aside class="topic-hero-panel">
+                <h2>Study Tip</h2>
+                <p th:text="${topic.studyTip}">Study tip content</p>
+            </aside>
+        </section>
+
+        <section class="topic-detail-grid">
+            <article class="section-shell topic-overview-card">
+                <div class="section-head compact">
+                    <div>
+                        <p class="section-tag">Overview</p>
+                        <h2>What You Should Understand</h2>
+                    </div>
+                </div>
+                <p class="topic-overview" th:text="${topic.overview}">Overview text</p>
+            </article>
+
+            <article class="section-shell">
+                <div class="section-head compact">
+                    <div>
+                        <p class="section-tag">Key Concepts</p>
+                        <h2>Core Areas</h2>
+                    </div>
+                </div>
+                <ul class="detail-list">
+                    <li th:each="concept : ${topic.concepts}" th:text="${concept}">Concept item</li>
+                </ul>
+            </article>
+        </section>
+
+        <section class="topic-detail-grid second">
+            <article class="section-shell dark-panel">
+                <div class="section-head compact">
+                    <div>
+                        <p class="section-tag">Interview Prep</p>
+                        <h2>Questions To Practice</h2>
+                    </div>
+                </div>
+                <ul class="detail-list light">
+                    <li th:each="question : ${topic.interviewQuestions}" th:text="${question}">Question item</li>
+                </ul>
+            </article>
+
+            <article class="section-shell takeaway-panel">
+                <div class="section-head compact">
+                    <div>
+                        <p class="section-tag">Takeaways</p>
+                        <h2>What To Remember</h2>
+                    </div>
+                </div>
+                <ul class="detail-list">
+                    <li th:each="takeaway : ${topic.takeaways}" th:text="${takeaway}">Takeaway item</li>
+                </ul>
+            </article>
+        </section>
+
+        <section class="section-shell">
+            <div class="section-head">
+                <div>
+                    <p class="section-tag">Continue Learning</p>
+                    <h2>Explore Related Topics</h2>
+                </div>
+            </div>
+            <div class="topic-grid related-grid">
+                <a class="topic-card" th:each="related : ${relatedTopics}" th:href="@{/topics/{slug}(slug=${related.slug})}">
+                    <span class="topic-tag" th:text="${related.tag}">Core</span>
+                    <h3 th:text="${related.title}">Git and GitHub</h3>
+                    <p th:text="${related.description}">Related topic description.</p>
+                    <span class="topic-link">Open topic</span>
+                </a>
+            </div>
+            <p class="timestamp">
+                View rendered at
+                <span th:text="${#temporals.format(lastUpdated, 'dd MMM yyyy HH:mm')}">15 Apr 2026 14:10</span>
+            </p>
+        </section>
+    </main>
+</div>
+</body>
+</html>
