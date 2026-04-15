@@ -183,6 +183,127 @@ sudo /path/to/tomcat/bin/startup.sh
 
 If your Tomcat is installed in a custom location, replace `/path/to/tomcat/` with your real path.
 
+## Jenkins CI/CD Deployment On EC2
+
+This project can also be deployed through a Jenkins freestyle job using Maven for build and Tomcat 9 for deployment.
+
+### Deployment Flow
+
+1. Launch an Amazon Linux EC2 instance.
+2. Connect to the server using MobaXterm.
+3. Install Java 17, Maven, Git, Jenkins, and Tomcat 9.
+4. Change the Tomcat port in `server.xml` to avoid conflict with Jenkins.
+5. Open the Tomcat port in the EC2 security group.
+6. Configure Tomcat Manager access and create Tomcat admin credentials.
+7. Configure GitHub and Tomcat credentials in Jenkins.
+8. Create a Jenkins job to pull the repository, build the WAR, and deploy it to Tomcat.
+
+### Server Setup
+
+Install required packages:
+
+```bash
+sudo dnf update -y
+sudo dnf install -y java-17-amazon-corretto-devel git maven
+```
+
+Install and start Jenkins:
+
+```bash
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
+sudo systemctl status jenkins
+```
+
+Tomcat can be installed manually and configured on a custom port such as `9191` so that Jenkins can continue using `8080`.
+
+### Tomcat Configuration
+
+Update the connector port in `server.xml`:
+
+```xml
+<Connector port="9191" protocol="HTTP/1.1"
+```
+
+Edit these files to allow Tomcat Manager access:
+
+- `webapps/manager/META-INF/context.xml`
+- `webapps/host-manager/META-INF/context.xml`
+
+Edit `tomcat-users.xml` and add roles such as:
+
+```xml
+<role rolename="manager-gui"/>
+<role rolename="manager-script"/>
+<role rolename="admin-gui"/>
+<user username="admin" password="your-password" roles="manager-gui,manager-script,admin-gui"/>
+```
+
+The `manager-script` role is important for Jenkins deployment.
+
+### Jenkins Configuration
+
+In Jenkins:
+
+- Install the `Deploy to container` plugin
+- Configure JDK under `Manage Jenkins` -> `Tools`
+- Add GitHub credentials for the repository
+- Add Tomcat credentials matching the user in `tomcat-users.xml`
+
+### Jenkins Job Setup
+
+Create a freestyle project and configure:
+
+- Source Code Management: `Git`
+- Repository URL: your GitHub repository URL
+- Credentials: GitHub credentials
+- Branch: `*/main`
+
+Under `Build`:
+
+- Select `Invoke top-level Maven targets`
+- Goals:
+
+```text
+clean package
+```
+
+Under `Post-build Actions`:
+
+- Select `Deploy war/ear to a container`
+- WAR/EAR files:
+
+```text
+**/*.war
+```
+
+- Container: `Tomcat 9.x Remote`
+- Tomcat URL:
+
+```text
+http://<your-ec2-public-ip>:9191
+```
+
+- Credentials: Tomcat credentials
+
+### Build And Verify
+
+Click `Build Now` in Jenkins.
+
+If the build and deployment succeed, open:
+
+```text
+http://<your-ec2-public-ip>:9191/project4-devops-app/
+```
+
+This deployment flow demonstrates:
+
+- GitHub integration with Jenkins
+- Maven build automation
+- WAR artifact generation
+- Remote deployment to Tomcat 9
+- End-to-end CI/CD for a Java web application
+
 ## Important Compatibility Note
 
 This project now uses Spring Boot 2.7 so it is compatible with:
