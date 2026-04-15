@@ -280,6 +280,7 @@ h1 {
 .dual-grid,
 .project-grid,
 .resource-grid,
+.visual-grid,
 .topic-detail-grid {
   display: grid;
   gap: 1.2rem;
@@ -484,12 +485,59 @@ h1 {
 
 .project-grid,
 .resource-grid,
+.visual-grid,
 .related-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .resource-card {
   background: linear-gradient(180deg, rgba(45, 108, 255, 0.06), rgba(255, 255, 255, 0.96));
+}
+
+.visual-panel {
+  background: linear-gradient(180deg, rgba(235, 242, 255, 0.82), rgba(255, 255, 255, 0.92));
+}
+
+.visual-card {
+  border-radius: 30px;
+  padding: 1rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(244, 248, 255, 0.9));
+  border: 1px solid var(--line);
+  box-shadow: 0 20px 34px rgba(31, 48, 94, 0.1);
+}
+
+.visual-frame {
+  overflow: hidden;
+  border-radius: 22px;
+  border: 1px solid rgba(45, 108, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 16px 28px rgba(31, 48, 94, 0.08);
+}
+
+.visual-frame img {
+  display: block;
+  width: 100%;
+  height: 18rem;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 0.35s ease;
+}
+
+.visual-card:hover .visual-frame img {
+  transform: scale(1.04);
+}
+
+.visual-copy {
+  padding: 1rem 0.35rem 0.2rem;
+}
+
+.visual-copy h3 {
+  margin: 0 0 0.45rem;
+}
+
+.visual-copy p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.75;
 }
 
 .topic-page-shell .content {
@@ -554,6 +602,7 @@ h1 {
   .dual-grid,
   .project-grid,
   .resource-grid,
+  .visual-grid,
   .related-grid,
   .topic-detail-grid {
     grid-template-columns: 1fr;

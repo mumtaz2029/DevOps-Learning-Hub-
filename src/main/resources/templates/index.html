@@ -147,6 +147,27 @@
             </div>
         </section>
 
+        <section class="section-shell visual-panel" id="walkthrough">
+            <div class="section-head">
+                <div>
+                    <p class="section-tag">Visual Walkthrough</p>
+                    <h2>See The Project In Action</h2>
+                </div>
+                <p>These screenshots show the portal experience and the Jenkins-based CI/CD flow behind the deployment.</p>
+            </div>
+            <div class="visual-grid">
+                <article class="visual-card tilt-card" th:each="visual : ${visuals}">
+                    <div class="visual-frame">
+                        <img th:src="${visual.image}" th:alt="${visual.title}">
+                    </div>
+                    <div class="visual-copy">
+                        <h3 th:text="${visual.title}">Live Learning Portal</h3>
+                        <p th:text="${visual.caption}">Screenshot caption</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
         <section class="section-shell resource-panel">
             <div class="section-head">
                 <div>

@@ -56,6 +56,12 @@ public class HomeController {
                 Map.of("title", "P3 - Azure Infrastructure Deployment", "description", "Cloud infrastructure provisioning on Azure with VM, networking, and deployment concepts."),
                 Map.of("title", "P4 - Tomcat Deployable WAR", "description", "A Spring Boot WAR deployed on Apache Tomcat to demonstrate external app server deployment.")
         ));
+        model.addAttribute("visuals", List.of(
+                Map.of("title", "Live Learning Portal", "caption", "The deployed public-facing DevOps Learning Portal running on Tomcat.", "image", "/images/showcase/portal-live.png"),
+                Map.of("title", "Jenkins Plugin Setup", "caption", "Deploy-to-container plugin installation used for automated Tomcat deployment.", "image", "/images/showcase/jenkins-plugin-install.png"),
+                Map.of("title", "Artifact Publishing", "caption", "Post-build action configuration for publishing WAR artifacts to S3.", "image", "/images/showcase/jenkins-s3-postbuild.png"),
+                Map.of("title", "Build Verification", "caption", "Jenkins job status screen confirming successful builds and pipeline flow.", "image", "/images/showcase/jenkins-build-status.png")
+        ));
         model.addAttribute("resources", List.of(
                 "Command cheat sheets for Linux, Git, Docker, and Kubernetes",
                 "Step-by-step deployment notes for Amazon Linux, S3, Jenkins, and Tomcat",
