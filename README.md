@@ -185,7 +185,7 @@ If your Tomcat is installed in a custom location, replace `/path/to/tomcat/` wit
 
 ## Jenkins CI/CD Deployment On EC2
 
-This project can also be deployed through a Jenkins freestyle job using Maven for build and Tomcat 9 for deployment.
+This project can also be deployed through a Jenkins freestyle job using Maven for build and Tomcat 9 for deployment. In this setup, build artifacts can also be stored in an AWS S3 bucket so they are preserved outside the EC2 instance.
 
 ### Deployment Flow
 
@@ -194,9 +194,11 @@ This project can also be deployed through a Jenkins freestyle job using Maven fo
 3. Install Java 17, Maven, Git, Jenkins, and Tomcat 9.
 4. Change the Tomcat port in `server.xml` to avoid conflict with Jenkins.
 5. Open the Tomcat port in the EC2 security group.
-6. Configure Tomcat Manager access and create Tomcat admin credentials.
-7. Configure GitHub and Tomcat credentials in Jenkins.
-8. Create a Jenkins job to pull the repository, build the WAR, and deploy it to Tomcat.
+6. Create an S3 bucket to store generated build artifacts.
+7. Create an IAM role with S3 access and attach it to the EC2 instance so Jenkins can communicate with S3 securely.
+8. Configure Tomcat Manager access and create Tomcat admin credentials.
+9. Configure GitHub and Tomcat credentials in Jenkins.
+10. Create a Jenkins job to pull the repository, build the WAR, and deploy it to Tomcat.
 
 ### Server Setup
 
@@ -216,6 +218,23 @@ sudo systemctl status jenkins
 ```
 
 Tomcat can be installed manually and configured on a custom port such as `9191` so that Jenkins can continue using `8080`.
+
+### Store Artifacts In AWS S3
+
+To keep generated WAR files in AWS cloud storage, create an S3 bucket for your build artifacts.
+
+Example flow:
+
+1. Create an S3 bucket such as `devops-learning-hub-artifacts`
+2. Create an IAM role for EC2
+3. Attach a policy that allows S3 access
+4. Attach the IAM role to the EC2 instance
+
+This is important because the EC2 instance should not rely on hardcoded AWS credentials. By attaching an IAM role, Jenkins running on EC2 can securely upload and access artifacts in S3.
+
+For practice environments, you may use `AmazonS3FullAccess`. For better real-world security, a narrower bucket-specific policy is recommended.
+
+Once the role is attached, the EC2 instance can interact with S3 using AWS CLI or Jenkins build steps without storing AWS access keys manually.
 
 ### Tomcat Configuration
 
@@ -300,8 +319,10 @@ This deployment flow demonstrates:
 
 - GitHub integration with Jenkins
 - Maven build automation
+- Artifact storage in AWS S3
 - WAR artifact generation
 - Remote deployment to Tomcat 9
+- IAM role-based secure AWS access from EC2
 - End-to-end CI/CD for a Java web application
 
 ## Important Compatibility Note
