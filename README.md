@@ -30,6 +30,32 @@ This repository is meant to demonstrate:
 - Project-based learning
 - Revision resources and roadmaps
 
+## Visual Walkthrough
+
+These screenshots show both the public-facing learning portal and the Jenkins-based CI/CD flow used to build, store, and deploy the WAR artifact.
+
+### Live DevOps Learning Portal
+
+![Live portal homepage](src/main/resources/static/images/showcase/portal-live.png)
+
+### Jenkins Plugin Installation
+
+This step shows the `Deploy to container` plugin being prepared for Tomcat deployment.
+
+![Jenkins plugin installation](src/main/resources/static/images/showcase/jenkins-plugin-install.png)
+
+### Jenkins S3 Artifact Publishing
+
+This screenshot shows the post-build configuration used to publish the generated WAR artifact to S3.
+
+![Jenkins S3 post-build action](src/main/resources/static/images/showcase/jenkins-s3-postbuild.png)
+
+### Jenkins Build Verification
+
+This view confirms successful job execution and helps demonstrate the CI/CD flow clearly in the repository.
+
+![Jenkins build status](src/main/resources/static/images/showcase/jenkins-build-status.png)
+
 ## Build The WAR
 
 Run this inside the project directory:
