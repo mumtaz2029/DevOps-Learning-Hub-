@@ -1,8 +1,8 @@
-# Project 4 - Tomcat Deployable WAR Application
+# Project 4 - DevOps Learning Portal
 
 This project is a Maven-based Spring Boot application packaged as a `.war` file so it can be deployed to an external Apache Tomcat server.
 
-It is designed for a DevOps-style deployment flow on an Amazon Linux EC2 instance where you install Java, Maven, and Tomcat, build the WAR, copy it to Tomcat, and expose the app on port `8080`.
+It now presents a modern DevOps Learning Portal with topic-wise learning sections, interview preparation, hands-on labs, project-based learning, and public-facing revision resources, while still keeping the WAR deployment flow for Apache Tomcat on Amazon Linux EC2.
 
 ## Tech Stack
 
@@ -19,7 +19,16 @@ This repository is meant to demonstrate:
 
 - WAR artifact creation with Maven
 - Deployment to external Tomcat instead of embedded Tomcat
+- A public-facing DevOps learning platform built with Spring Boot and Thymeleaf
 - EC2-friendly deployment steps for a DevOps portfolio project
+
+## Portal Sections
+
+- Core DevOps topics
+- Interview preparation
+- Hands-on labs
+- Project-based learning
+- Revision resources and roadmaps
 
 ## Build The WAR
 

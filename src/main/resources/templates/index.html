@@ -3,48 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${title}">Project 4 - Tomcat Deployment Demo</title>
+    <title th:text="${title}">DevOps Learning Portal</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<main class="page-shell">
-    <section class="hero-card">
-        <p class="eyebrow">DevOps-ready WAR application</p>
-        <h1 th:text="${title}">Project 4 - Tomcat Deployment Demo</h1>
-        <p class="lead" th:text="${subtitle}">
-            WAR-based Spring Boot application prepared for Apache Tomcat 9 on Amazon Linux EC2.
-        </p>
-
-        <div class="meta-grid">
-            <article>
-                <span>Build Tool</span>
-                <strong th:text="${buildTool}">Maven</strong>
-            </article>
-            <article>
-                <span>Deployment Target</span>
-                <strong th:text="${deployTarget}">Apache Tomcat 9</strong>
-            </article>
-            <article>
-                <span>Runtime</span>
-                <strong th:text="${runtime}">Java 17</strong>
-            </article>
+<div class="page-shell">
+    <header class="topbar">
+        <div class="brand">
+            <span class="brand-mark">D</span>
+            <div>
+                <strong th:text="${title}">DevOps Learning Portal</strong>
+                <p>Tomcat-deployable public learning app</p>
+            </div>
         </div>
+        <nav class="topnav">
+            <a href="#topics">Topics</a>
+            <a href="#interview">Interview Prep</a>
+            <a href="#labs">Labs</a>
+            <a href="#projects">Projects</a>
+            <a href="/api/health">Health API</a>
+        </nav>
+    </header>
 
-        <div class="steps-card">
-            <h2>Deployment flow</h2>
-            <ol>
-                <li>Build the WAR with Maven.</li>
-                <li>Copy `project4-devops-app.war` to Tomcat `webapps/`.</li>
-                <li>Start or restart Tomcat on the EC2 instance.</li>
-                <li>Access the app on port `8080`.</li>
-            </ol>
-        </div>
+    <main class="content">
+        <section class="hero-card">
+            <div class="hero-copy">
+                <p class="eyebrow" th:text="${heroTag}">Learn. Practice. Deploy.</p>
+                <h1 th:text="${title}">DevOps Learning Portal</h1>
+                <p class="lead" th:text="${subtitle}">
+                    A public learning portal for DevOps fundamentals, interview preparation, hands-on labs, and project-based practice.
+                </p>
+                <div class="path-row">
+                    <span th:each="path : ${learningPaths}" th:text="${path}">Beginner Path</span>
+                </div>
+            </div>
+            <aside class="hero-panel">
+                <h2>What you can do here</h2>
+                <ul>
+                    <li>Explore core DevOps topics in simple sections</li>
+                    <li>Prepare for interviews with practical questions</li>
+                    <li>Review hands-on labs and deployment workflows</li>
+                    <li>Learn through real portfolio projects</li>
+                </ul>
+            </aside>
+        </section>
 
-        <p class="timestamp">
-            View rendered at
-            <span th:text="${#temporals.format(lastUpdated, 'dd MMM yyyy HH:mm')}">10 Apr 2026 10:30</span>
-        </p>
-    </section>
-</main>
+        <section class="stats-grid">
+            <article class="stat-card" th:each="stat : ${stats}">
+                <p th:text="${stat.label}">Core Modules</p>
+                <strong th:text="${stat.value}">10+</strong>
+            </article>
+        </section>
+
+        <section class="section-shell" id="topics">
+            <div class="section-head">
+                <div>
+                    <p class="section-tag">Core Learning</p>
+                    <h2>DevOps Core Topics</h2>
+                </div>
+                <p>Build strong fundamentals before moving into automation, deployment, and cloud operations.</p>
+            </div>
+            <div class="topic-grid">
+                <article class="topic-card" th:each="topic : ${topics}">
+                    <span class="topic-tag" th:text="${topic.tag}">Beginner</span>
+                    <h3 th:text="${topic.title}">Linux Essentials</h3>
+                    <p th:text="${topic.description}">Master commands and permissions.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section-shell dark-panel" id="interview">
+            <div class="section-head">
+                <div>
+                    <p class="section-tag">Interview Prep</p>
+                    <h2>Questions and Concept Reviews</h2>
+                </div>
+                <p>Practice the kind of technical and scenario-based questions that come up in DevOps interviews.</p>
+            </div>
+            <div class="interview-grid">
+                <article class="interview-card" th:each="track : ${interviewTracks}">
+                    <h3 th:text="${track.title}">Foundational Questions</h3>
+                    <ul>
+                        <li th:each="item : ${track.items}" th:text="${item}">Question text</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section class="dual-grid" id="labs">
+            <article class="section-shell">
+                <div class="section-head">
+                    <div>
+                        <p class="section-tag">Hands-on</p>
+                        <h2>Practice Labs</h2>
+                    </div>
+                </div>
+                <div class="lab-list">
+                    <div class="lab-card" th:each="lab : ${labs}">
+                        <div>
+                            <h3 th:text="${lab.title}">Build a WAR with Maven</h3>
+                            <p>Step-by-step guided practice exercise</p>
+                        </div>
+                        <span th:text="${lab.level}">Intermediate</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="section-shell roadmap-panel">
+                <div class="section-head">
+                    <div>
+                        <p class="section-tag">Roadmap</p>
+                        <h2>Suggested Learning Flow</h2>
+                    </div>
+                </div>
+                <ol class="roadmap-list">
+                    <li>Start with Linux, Git, and networking basics.</li>
+                    <li>Learn Maven builds and how Java apps are packaged.</li>
+                    <li>Move into Jenkins pipelines and Docker containerization.</li>
+                    <li>Practice Tomcat deployment, cloud setup, and Kubernetes basics.</li>
+                </ol>
+            </article>
+        </section>
+
+        <section class="section-shell" id="projects">
+            <div class="section-head">
+                <div>
+                    <p class="section-tag">Project-Based Learning</p>
+                    <h2>Portfolio Projects</h2>
+                </div>
+                <p>See how each topic connects to real projects that can be built, deployed, and discussed in interviews.</p>
+            </div>
+            <div class="project-grid">
+                <article class="project-card" th:each="project : ${projects}">
+                    <h3 th:text="${project.title}">P1 - CI/CD Java Application</h3>
+                    <p th:text="${project.description}">Project description</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section-shell resource-panel">
+            <div class="section-head">
+                <div>
+                    <p class="section-tag">Resources</p>
+                    <h2>Quick Revision Materials</h2>
+                </div>
+                <p>Use these materials for fast revision before practice sessions, deployments, or interviews.</p>
+            </div>
+            <div class="resource-grid">
+                <article class="resource-card" th:each="resource : ${resources}">
+                    <p th:text="${resource}">Command cheat sheets</p>
+                </article>
+            </div>
+            <p class="timestamp">
+                View rendered at
+                <span th:text="${#temporals.format(lastUpdated, 'dd MMM yyyy HH:mm')}">10 Apr 2026 10:30</span>
+            </p>
+        </section>
+    </main>
+</div>
 </body>
 </html>
