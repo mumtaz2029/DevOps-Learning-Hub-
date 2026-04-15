@@ -60,7 +60,7 @@ These steps assume:
 - You installed Java 17
 - You installed Maven
 - You installed Apache Tomcat 9
-- Port `8080` is allowed in the EC2 security group
+- Port `9191` is allowed in the EC2 security group if Tomcat is moved away from `8080`
 
 ### 1. Install dependencies
 
@@ -84,7 +84,7 @@ sudo chmod +x /opt/tomcat/bin/*.sh
 ### 3. Download the repository
 
 ```bash
-git clone https://github.com/mumtaz2029/Project--4.git
+git clone https://github.com/mumtaz2029/DevOps-Learning-Hub-.git
 cd Project--4
 ```
 
@@ -115,7 +115,7 @@ sudo /opt/tomcat/bin/startup.sh
 ### 7. Open the application
 
 ```text
-http://<your-ec2-public-ip>:8080/project4-devops-app/
+http://<your-ec2-public-ip>:9191/project4-devops-app/
 ```
 
 ## Application Endpoints
@@ -149,7 +149,7 @@ If you are using Tomcat Manager:
 If you want to build the WAR yourself and then upload it in the Tomcat web interface:
 
 ```bash
-git clone https://github.com/mumtaz2029/Project--4.git
+git clone https://github.com/mumtaz2029/DevOps-Learning-Hub-.git
 cd Project--4
 mvn clean package
 ```
@@ -166,7 +166,7 @@ After the build finishes:
 If you want to deploy directly on the server without using the Tomcat Manager page:
 
 ```bash
-git clone https://github.com/mumtaz2029/Project--4.git
+git clone https://github.com/mumtaz2029/DevOps-Learning-Hub-.git
 cd Project--4
 mvn clean package
 sudo cp target/project4-devops-app.war /path/to/tomcat/webapps/
@@ -198,7 +198,7 @@ This project can also be deployed through a Jenkins freestyle job using Maven fo
 7. Create an IAM role with S3 access and attach it to the EC2 instance so Jenkins can communicate with S3 securely.
 8. Configure Tomcat Manager access and create Tomcat admin credentials.
 9. Configure GitHub and Tomcat credentials in Jenkins.
-10. Create a Jenkins job to pull the repository, build the WAR, and deploy it to Tomcat.
+10. Create a Jenkins job to pull the repository, build the WAR, publish the artifact to S3, and deploy it to Tomcat.
 
 ### Server Setup
 
@@ -265,9 +265,36 @@ The `manager-script` role is important for Jenkins deployment.
 In Jenkins:
 
 - Install the `Deploy to container` plugin
+- Install the `S3 publisher` plugin
 - Configure JDK under `Manage Jenkins` -> `Tools`
 - Add GitHub credentials for the repository
 - Add Tomcat credentials matching the user in `tomcat-users.xml`
+
+### Configure S3 In Jenkins
+
+After the EC2 IAM role is attached, Jenkins can use the instance role to upload artifacts to S3 without storing AWS access keys manually.
+
+Recommended setup:
+
+1. Open Jenkins
+2. Go to `Manage Jenkins` -> `Plugins`
+3. In `Available plugins`, search for `S3 publisher`
+4. Install the plugin and restart Jenkins if required
+5. Open your freestyle job and click `Configure`
+6. Keep your Git and Maven build steps as usual
+7. Under `Post-build Actions`, click `Add post-build action`
+8. Select `Publish artifacts to S3 Bucket`
+
+Suggested field values:
+
+- `Bucket`: your S3 bucket name
+- `Region`: your AWS bucket region such as `ap-south-1`
+- `Source files`: `**/*.war`
+- `No upload on build failure`: enabled
+- `Flatten files`: optional
+- `Server-side encryption`: optional but recommended
+
+This step uploads the generated WAR artifact to S3 after the build completes successfully.
 
 ### Jenkins Job Setup
 
@@ -289,6 +316,16 @@ clean package
 
 Under `Post-build Actions`:
 
+- First select `Publish artifacts to S3 Bucket`
+- Bucket: your S3 bucket name
+- Region: your AWS region
+- Source files:
+
+```text
+**/*.war
+```
+
+- Then add another post-build action
 - Select `Deploy war/ear to a container`
 - WAR/EAR files:
 
@@ -309,7 +346,15 @@ http://<your-ec2-public-ip>:9191
 
 Click `Build Now` in Jenkins.
 
-If the build and deployment succeed, open:
+The expected sequence is:
+
+1. Jenkins pulls the code from GitHub
+2. Maven runs `clean package`
+3. The WAR file is generated
+4. Jenkins uploads the WAR to S3
+5. Jenkins deploys the WAR to Tomcat 9
+
+If the build, artifact upload, and deployment succeed, open:
 
 ```text
 http://<your-ec2-public-ip>:9191/project4-devops-app/
