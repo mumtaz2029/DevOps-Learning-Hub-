@@ -15,7 +15,7 @@ Alongside the deployment workflow, the project itself is a public-facing DevOps 
 
 ## Tech Stack
 
-- Java 17
+- Java 21
 - Maven
 - Spring Boot 2.7
 - Thymeleaf
