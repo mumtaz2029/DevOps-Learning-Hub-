@@ -71,6 +71,12 @@ This screenshot shows the post-build configuration used to publish the generated
 
 ![Jenkins S3 post-build action](src/main/resources/static/images/showcase/jenkins-s3-postbuild.png)
 
+### S3 Artifact Version Storage
+
+This screenshot shows the generated WAR artifacts stored in the S3 bucket with version history, which helps demonstrate artifact retention and traceability across builds.
+
+![S3 artifact versions](src/main/resources/static/images/showcase/s3-artifact-versions.png)
+
 ### Jenkins Build Verification
 
 This view confirms successful job execution and helps demonstrate the CI/CD flow clearly in the repository.
